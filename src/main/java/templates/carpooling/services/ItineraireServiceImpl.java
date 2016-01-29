@@ -2,8 +2,8 @@ package templates.carpooling.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import templates.carpooling.classes.Itineraire;
-import templates.carpooling.model.ItineraireMapper;
+import templates.carpooling.models.Itineraire;
+import templates.carpooling.dao.ItineraireMapper;
 
 import java.util.List;
 

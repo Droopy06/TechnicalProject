@@ -1,4 +1,4 @@
-package templates.carpooling.classes;
+package templates.carpooling.models;
 
 /**
  * Created by prog on 27/01/2016.

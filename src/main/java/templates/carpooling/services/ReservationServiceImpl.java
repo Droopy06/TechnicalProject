@@ -2,9 +2,9 @@ package templates.carpooling.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import templates.carpooling.classes.Membre;
-import templates.carpooling.classes.Reservation;
-import templates.carpooling.model.ReservationMapper;
+import templates.carpooling.models.Membre;
+import templates.carpooling.models.Reservation;
+import templates.carpooling.dao.ReservationMapper;
 
 import java.util.List;
 

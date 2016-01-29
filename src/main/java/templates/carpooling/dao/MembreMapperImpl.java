@@ -1,7 +1,7 @@
-package templates.carpooling.model;
+package templates.carpooling.dao;
 
 import org.springframework.stereotype.Repository;
-import templates.carpooling.classes.Membre;
+import templates.carpooling.models.Membre;
 
 import java.util.List;
 

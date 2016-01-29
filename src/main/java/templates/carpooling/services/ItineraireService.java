@@ -1,6 +1,6 @@
 package templates.carpooling.services;
 
-import templates.carpooling.classes.Itineraire;
+import templates.carpooling.models.Itineraire;
 
 import java.util.List;
 

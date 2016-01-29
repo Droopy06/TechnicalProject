@@ -1,6 +1,6 @@
 package templates.carpooling.services;
 
-import templates.carpooling.classes.Membre;
+import templates.carpooling.models.Membre;
 
 import java.util.List;
 
