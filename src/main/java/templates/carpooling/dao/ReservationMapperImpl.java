@@ -1,6 +1,9 @@
 package templates.carpooling.dao;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
+import templates.carpooling.HibernateUtil;
 import templates.carpooling.models.Membre;
 import templates.carpooling.models.Reservation;
 
@@ -11,6 +14,9 @@ import java.util.List;
  */
 @Repository
 public class ReservationMapperImpl implements ReservationMapper {
+
+    private SessionFactory sessionFactory;
+
     @Override
     public List<Reservation> findAllReservationByMember(Membre membre) {
         return null;
@@ -18,21 +24,40 @@ public class ReservationMapperImpl implements ReservationMapper {
 
     @Override
     public List<Reservation> findAllReservation() {
-        return null;
+        sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        List<Reservation> reservations = session.createQuery("from Reservations").list();
+        session.close();
+        return reservations;
     }
 
     @Override
     public void saveReservation(Reservation reservation) {
-
+        sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(reservation);
+        session.getTransaction().commit();
+        session.close();
     }
 
     @Override
     public void updateReservation(Reservation reservation) {
-
+        sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.update(reservation);
+        session.getTransaction().commit();
+        session.close();
     }
 
     @Override
     public void removeReservation(Reservation reservation) {
-
+        sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(reservation);
+        session.getTransaction().commit();
+        session.close();
     }
 }
