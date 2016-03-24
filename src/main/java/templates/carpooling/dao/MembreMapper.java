@@ -10,6 +10,7 @@ import java.util.List;
 public interface MembreMapper {
     List<Membre> listAllMembres();
     Membre getMemberById(long id);
+    Membre getMemberByEmail(String email,String password);
     void saveMember(Membre membre);
     void updateInformation(Membre membre);
 }
