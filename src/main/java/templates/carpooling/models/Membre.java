@@ -25,4 +25,5 @@ public class Membre {
     private @Getter @Setter String adresse;
     private @Getter @Setter int age;
     private @Getter @Setter boolean isHaveCar;
+    private @Getter @Setter String token;
 }
