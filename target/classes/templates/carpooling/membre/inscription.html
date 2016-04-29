@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap.min.css}"
+          href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap-theme.css}"
+          href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../../static/css/main.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Carpooling project</title>
+</head>
+<body class="checkout">
+    <div class="main">
+        <div class="main banner" id="main" data-stellar-background-ratio="0.5">
+            <div class="container-fluid noPadding">
+                <header>
+                    <!-- Navbar -->
+                    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+                        <nav class="navbar navbar-inverse navbar-fixed-top">
+                            <div class="container-fluid">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                            data-target="#navbar" aria-expanded="false">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                    <a class="navbar-brand" href="/">
+                                        <img alt="Carpooling" src="../../../static/images/LogoCarPooling.png"
+                                             th:src="@{/images/LogoCarPooling.png}" class="logo"/>
+                                        <span>Carpooling</span>
+                                    </a>
+                                </div>
+                                <div class="navbar-collapse collapse" id="navbar">
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li><a href="/trajets">Nos trajets</a></li>
+                                        <li><a href="/account" th:if="${session.containsKey('membre')}"><i
+                                                class="fa fa-user-plus"></i>Mon compte</a></li>
+                                        <li><a href="/logout" th:if="${session.containsKey('membre')}"><i
+                                                class="fa fa-sign-out"></i> </a></li>
+                                        <li><a href="/connexion" th:unless="${session.containsKey('membre')}"><i
+                                                class="fa fa-sign-in"></i> Se connecter</a></li>
+                                        <li><a href="/panier"><i class="fa fa-shopping-bag"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </header>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <h1 class="sep">Rejoignez la communauté de Carpooling !</h1>
+                </div>
+            </div>
+            <form action="/inscription" method="post" th:object="${membre}" onsubmit="verifPassword()">
+                <div class="row">
+                    <div class="infos-block clearfix mt25">
+                        <div class="alert alert-danger" role="alert" th:if="${erreur}">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Error:</span>
+                            <span th:text="${erreur}"></span>
+                        </div>
+                            <div class="row">
+                                <div class="col-sm-6 infos-block__personal sameHeight">
+                                    <h2 class="sep">Informations personnelles</h2>
+                                    <div class="form-group">
+                                        <label for="nom">Nom&nbsp;<sup>*</sup></label>
+                                        <input type="text" th:field="*{nom}" placeholder="Entrez votre nom" value=""/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="prenom">Prénom&nbsp;<sup>*</sup></label>
+                                        <input type="text" th:field="*{prenom}" placeholder="Entrez votre prénom" value=""/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email&nbsp;<sup>*</sup></label>
+                                        <input type="email" th:field="*{email}" placeholder="Entrez votre email" value=""/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Mot de passe&nbsp;<sup>*</sup></label>
+                                        <input type="password" th:field="*{password}" placeholder="Entrez votre mot de passe" value=""/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Confirmation du mot de passe&nbsp;<sup>*</sup></label>
+                                        <input type="password" th:name="confirm" id="confirm" placeholder="Confirmez votre mot de passe" value=""/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 infos-block__address sameHeight">
+                                    <h2 class="sep">Adresse</h2>
+                                    <div class="form-group">
+                                        <label for="adresse">Adresse<sup>*</sup></label>
+                                        <input type="text" th:field="*{adresse}" value=""/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cp">Code Postale</label>
+                                        <input type="text" name="cp" value=""/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pays">Pays</label>
+                                        <input type="text" name="pays" value=""/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telephone">Téléphone<sup>*</sup></label>
+                                        <input type="text" th:field="*{telephone}" value=""/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telephone">Téléphone port</label>
+                                        <input type="text" name="port" value=""/>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="buttons-block">
+                        <a class="button prev" href="/connexion">Retour</a>
+                        <input class="button next" type="submit" value="Je m'inscris !"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <footer>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="footer__copyright">
+                        <hr/>
+                        <li>©&nbsp;Amazon • 2016</li>
+                        <li><a href="" rel="nofollow">Mentions légales</a> • </li>
+                        <li><a href="tel:0320010203" rel="nofollow"><i class="fa fa-phone"></i> 03 20 01 02 03</a> • </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            function verifPassword(){
+                return ($("#confirm").val() == $("#password").val);
+            }
+        </script>
+    </footer>
+</body>
+</html>

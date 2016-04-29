@@ -19,14 +19,18 @@ public class ReservationMapperImpl implements ReservationMapper {
 
     @Override
     public List<Reservation> findAllReservationByMember(Membre membre) {
-        return null;
+        sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        List<Reservation> reservations = session.createQuery("from Reservation where idMembre="+membre.getId()).list();
+        session.close();
+        return reservations;
     }
 
     @Override
     public List<Reservation> findAllReservation() {
         sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
-        List<Reservation> reservations = session.createQuery("from Reservations").list();
+        List<Reservation> reservations = session.createQuery("from Reservation").list();
         session.close();
         return reservations;
     }

@@ -3,15 +3,18 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password"></property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/projetTechnique</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.username">carpooling</property>
+        <property name="hibernate.connection.password">carpooling</property>
+        <property name="hibernate.connection.url">jdbc:mysql://vps132557.ovh.net:3306/carpooling?useSSL=false</property>
+        <property name="hibernate.connection.verifyServerCertificate">false</property>
+        <property name="hibernate.connection.requireSSL">false</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
         <property name="show_sql">true</property>
         <property name="connection.pool_size">1</property>
-        <mapping class="templates.carpooling.models.Itineraire"></mapping>
-        <mapping class="templates.carpooling.models.Membre"></mapping>
-        <mapping class="templates.carpooling.models.Reservation"></mapping>
+        <mapping class="templates.carpooling.models.Itineraire"/>
+        <mapping class="templates.carpooling.models.Membre"/>
+        <mapping class="templates.carpooling.models.Reservation"/>
+        <mapping class="templates.carpooling.models.Notation"/>
     </session-factory>
 </hibernate-configuration>
