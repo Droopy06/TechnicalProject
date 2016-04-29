@@ -14,14 +14,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name="itineraire")
 public class Itineraire {
-
     @Id
     @GeneratedValue
     private @Getter @Setter long id;
+    private @Getter @Setter String nom;
     private @Getter @Setter String departure;
     private @Getter @Setter String arrival;
+    private @Getter @Setter String description;
     private @Getter @Setter long price;
     private @Getter @Setter int seat;
-
-
+    private @Getter @Setter int idMembre;
 }

@@ -38,6 +38,7 @@ public class MembreServiceImpl implements MembreService {
     @Override
     public void saveMember(Membre membre) {
         membre.setToken(this.getTokenByUser());
+        membre.setActif(false);
         membreMapper.saveMember(membre);
     }
 

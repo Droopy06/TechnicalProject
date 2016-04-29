@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap.min.css}"
+          href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap-theme.css}"
+          href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../../static/css/main.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Carppoling project</title>
+</head>
+<body class="sign-in">
+    <div class="main">
+        <div class="main banner" id="main" data-stellar-background-ratio="0.5">
+            <div class="container-fluid noPadding">
+                <header>
+                    <!-- Navbar -->
+                    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+                        <nav class="navbar navbar-inverse navbar-fixed-top">
+                            <div class="container-fluid">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                            data-target="#navbar" aria-expanded="false">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                    <a class="navbar-brand" href="/">
+                                        <img alt="Carpooling" src="../../../static/images/LogoCarPooling.png"
+                                             th:src="@{/images/LogoCarPooling.png}" class="logo"/>
+                                        <span>Carpooling</span>
+                                    </a>
+                                </div>
+                                <div class="navbar-collapse collapse" id="navbar">
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li><a href="/trajets">Nos trajets</a></li>
+                                        <li><a href="/account" th:if="${session.containsKey('membre')}"><i
+                                                class="fa fa-user-plus"></i>Mon compte</a></li>
+                                        <li><a href="/logout" th:if="${session.containsKey('membre')}"><i
+                                                class="fa fa-sign-out"></i> </a></li>
+                                        <li><a href="/connexion" th:unless="${session.containsKey('membre')}"><i
+                                                class="fa fa-sign-in"></i> Se connecter</a></li>
+                                        <li><a href="/panier"><i class="fa fa-shopping-bag"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </header>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="sign-in">
+            <h1 class="no-sep">Espace voyageur</h1>
+            <div class="alert alert-danger" role="alert" th:if="${erreur}">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                <span th:text="${erreur}"></span>
+            </div>
+            <form method="post" action="/connect" th:object="${membre}">
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-4">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" th:field="*{email}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-4">
+                        <div class="form-group">
+                            <label for="password">Password: </label>
+                            <input type="password" th:field="*{password}" />
+                            <p class="forgotten-pwd">
+                                <span class="small">Vous avez oublié votre mot de passe&nbsp;?<br/>
+                                    <a class="fancybox" href="#recover-pwd">Cliquez-ici</a>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-4">
+                        <div class="form-group">
+                            <input type="submit" class="button" name="connexion" value="Se connecter" />
+                            <a class="button" href="/inscription">Je m'inscris</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="recover-pwd-block" id="recover-pwd">
+            <form action="/connexion/oublieMdp" method="post" accept-charset="utf-8">
+                <h2 class="sep">Oubli de mot de passe</h2>
+                <div class="form-group">
+                    <label for="pwd-recover-email">Entrez l'e-mail lié à votre compte</label>
+                    <input type="email" placeholder="Saisissez votre e-mail" name="pwd-recover-email"
+                           id="pwd-recover-email" value=""/>
+                </div>
+                <button type="submit" class="button">Recevoir mon mot de passe</button>
+            </form>
+        </div>
+    </div>
+    <footer>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="footer__copyright">
+                        <hr/>
+                        <li>©&nbsp;Amazon • 2016</li>
+                        <li><a href="" rel="nofollow">Mentions légales</a> • </li>
+                        <li><a href="tel:0320010203" rel="nofollow"><i class="fa fa-phone"></i> 03 20 01 02 03</a> • </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    </footer>
+</body>
+</html>

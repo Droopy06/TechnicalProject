@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap.min.css}"
+              href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap-theme.css}"
+              href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.css"/>
+        <link rel="stylesheet" th:href="@{/css/main.css}" href="../../../static/css/main.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Carpooling</title>
+    </head>
+    <body class="single-destination">
+        <div class="main banner" id="main" data-stellar-background-ratio="0.5">
+            <div class="container-fluid noPadding">
+                <header>
+                    <!-- Navbar -->
+                    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+                        <nav class="navbar navbar-inverse navbar-fixed-top">
+                            <div class="container-fluid">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                            data-target="#navbar" aria-expanded="false">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                    <a class="navbar-brand" href="/">
+                                        <img alt="Carpooling" src="../../../static/images/LogoCarPooling.png"
+                                             th:src="@{/images/LogoCarPooling.png}" class="logo"/>
+                                        <span>Carpooling</span>
+                                    </a>
+                                </div>
+                                <div class="navbar-collapse collapse" id="navbar">
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li><a href="/trajets">Nos trajets</a></li>
+                                        <li><a href="/account" th:if="${session.containsKey('membre')}"><i
+                                                class="fa fa-user-plus"></i>Mon compte</a></li>
+                                        <li><a href="/logout" th:if="${session.containsKey('membre')}"><i
+                                                class="fa fa-sign-out"></i> </a></li>
+                                        <li><a href="/connexion" th:unless="${session.containsKey('membre')}"><i
+                                                class="fa fa-sign-in"></i> Se connecter</a></li>
+                                        <li><a href="/panier"><i class="fa fa-shopping-bag"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </header>
+            </div>
+        </div>
+        <div class="content" id="content">
+            <div class="introduction">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 introduction_description sameHeight">
+                            <h1 class="no-sep" th:text="${trajet.nom}"></h1>
+                            <p th:text="${trajet.description}"></p>
+                        </div>
+                        <div class="col-md-4 introduction_aside sameHeight">
+                            <h2 class="no-sep">Informations</h2>
+                            <ul id="introduction_aside--infos">
+                                <li th:text="'Départ : '+${trajet.departure}"></li>
+                                <li th:text="'Arrivée : '+${trajet.arrival}"></li>
+                                <li>Monnaie : Euros</li>
+                                <li th:text="'Prix : '+${trajet.price}+' €'"></li>
+                                <li th:text="'Nombre de places : '+${trajet.seat}"></li>
+                            </ul>
+                            <input type="hidden" name="departure" id="departure" th:value="${trajet.departure}"/>
+                            <input type="hidden" name="arrival" id="arrival" th:value="${trajet.arrival}"/>
+                            <div id="introduction_aside--social">
+                                <a class="item_fb" th:href="'https://www.facebook.com/sharer/sharer.php?u=http://localhost:8090/trajet/'+${trajet.id}" target="blank">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                                <a class="item_tw" th:href="'http://twitter.com/intent/tweet/?url=http://localhost:8090/trajet/'+${trajet.id}" target="blank">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                                <a class="item_gp" th:href="'https://plus.google.com/share?url=http://localhost:8090/trajet/'+${trajet.id}" target="blank">
+                                    <i class="fa fa-google-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="buttons-wrapper noselect" id="buttons">
+                <div class="row noPadding">
+                    <!--<a class="button active" rel="#buttons" id="info-button">
+                        Plus d'informations
+                    </a>-->
+                    <a class="button active" rel="#buttons" id="map-button">
+                        Localisez-le
+                    </a>
+                    <!--
+                    <a class="button" rel="#buttons" id="prices-button">
+                        Voir dates et prix
+                    </a>-->
+                    <a class="button" rel="#buttons" href="">
+                        Je réserve !
+                    </a>
+                </div>
+            </div>
+            <div class="container">
+                <!-- block:Infos -->
+                <div class="row">
+                    <div class="col-md-12 destination__informations" id="infos">
+                        <h2 class="sep">Informations générales</h2>
+                        <ul class="info-icons">
+                            <li>
+                                <img src="http://walkabout-voyages.fr/assets/images/info-pics/currency_white.png"
+                                     alt="Monnaie"/>
+                                <p><strong>Monnaie</strong></p>
+                                <p>Euros</p>
+                            </li>
+                            <li>
+                                <img src="http://walkabout-voyages.fr/assets/images/info-pics/animals_white.png" alt="Animaux"/>
+                                <p><strong>Animaux</strong></p>
+                                <p>Interdits</p>
+                            </li>
+                            <!--<li>
+                                <img src="http://walkabout-voyages.fr/assets/images/info-pics/pension_white.png" alt="Pension"/>
+                                <p><strong>Pension</strong></p>
+                                <p>compléte</p>
+                            </li>-->
+                            <li>
+                                <img src="http://walkabout-voyages.fr/assets/images/info-pics/passport_white.png"
+                                     alt="Passeport"/>
+                                <p><strong>Pièce d'identité</strong></p>
+                                <p>obligatoire</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="destination__map" id="map">
+                        <h2 class="sep">Localisation</h2>
+                        <div class="map-wrapper">
+                            <div id="panel"></div>
+                            <div id="map-canvas">
+                                <p>Veuillez patienter pendant le chargement de la carte...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="footer__copyright">
+                            <hr/>
+                            <li>©&nbsp;Carpooling • 2016</li>
+                            <li><a href="" rel="nofollow">Mentions légales</a> •</li>
+                            <li><a href="tel:0320010203" rel="nofollow"><i class="fa fa-phone"></i> 03 20 01 02 03</a> •</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer >
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+                integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+                crossorigin="anonymous"></script>
+        <!-- Google map API -->
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyDaXIWw3tZ1wvFd2OBRZEH3AAT6fI2q8zI"></script>
+        <!-- Initialisation du js du site ! -->
+        <script th:src="@{/js/main.js}" src="../../../static/js/main.js"></script>
+        <!-- Initialisation de la carte! -->
+        <script type="text/javascript">
+            /***
+             * Google Map function
+             */
+            var map;
+            var panel;
+            var initialize;
+            var calculate;
+            var direction;
+
+            initialize = function(){
+                var latLng = new google.maps.LatLng(50.6371834, 3.063017400000035); // Correspond au coordonnées de Lille
+                var myOptions = {
+                    zoom      : 14, // Zoom par défaut
+                    center    : latLng, // Coordonnées de départ de la carte de type latLng
+                    mapTypeId : google.maps.MapTypeId.TERRAIN, // Type de carte, différentes valeurs possible HYBRID, ROADMAP, SATELLITE, TERRAIN
+                    maxZoom   : 20
+                };
+
+                map      = new google.maps.Map(document.getElementById('map-canvas'), myOptions);
+                panel    = document.getElementById('panel');
+
+                direction = new google.maps.DirectionsRenderer({
+                    map   : map,
+                    //panel : panel // Dom element pour afficher les instructions d'itinéraire
+                });
+            };
+
+            calculate = function(){
+                origin      = document.getElementById('departure').value; // Le point départ
+                destination = document.getElementById('arrival').value; // Le point d'arrivé
+                waypts      = [];
+                /*waypts      = [{
+                                    location: 'Paris, France',
+                                    stopover: true
+                                },
+                                {
+                                    location: 'Lyon, France',
+                                    stopover: true
+                                }];*/
+                var request = {
+                    origin      : origin,
+                    destination : destination,
+                    waypoints: waypts,
+                    optimizeWaypoints: true,
+                    travelMode  : google.maps.DirectionsTravelMode.DRIVING // Mode de conduite
+                };
+                var directionsService = new google.maps.DirectionsService(); // Service de calcul d'itinéraire
+                directionsService.route(request, function(response, status){ // Envoie de la requête pour calculer le parcours
+                    if(status == google.maps.DirectionsStatus.OK){
+                        direction.setDirections(response); // Trace l'itinéraire sur la carte et les différentes étapes du parcours
+                    }
+                });
+            };
+
+            initialize();
+            calculate();
+        </script>
+    </body >
+</html>

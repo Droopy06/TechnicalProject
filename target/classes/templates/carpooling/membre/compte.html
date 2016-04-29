@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap.min.css}"
+          href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap-theme.css}"
+          href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../../static/css/main.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Carpooling project</title>
+</head>
+<body class="espace-voyageur">
+    <div class="main">
+        <div class="main banner" id="main" data-stellar-background-ratio="0.5">
+            <div class="container-fluid noPadding">
+                <header>
+                    <!-- Navbar -->
+                    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+                        <nav class="navbar navbar-inverse navbar-fixed-top">
+                            <div class="container-fluid">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                            data-target="#navbar" aria-expanded="false">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                    <a class="navbar-brand" href="/">
+                                        <img alt="Carpooling" src="../../../static/images/LogoCarPooling.png"
+                                             th:src="@{/images/LogoCarPooling.png}" class="logo"/>
+                                        <span>Carpooling</span>
+                                    </a>
+                                </div>
+                                <div class="navbar-collapse collapse" id="navbar">
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li><a href="/trajets">Nos trajets</a></li>
+                                        <li><a href="/account" th:if="${session.containsKey('membre')}"><i
+                                                class="fa fa-user-plus"></i>Mon compte</a></li>
+                                        <li><a href="/logout" th:if="${session.containsKey('membre')}"><i
+                                                class="fa fa-sign-out"></i> </a></li>
+                                        <li><a href="/connexion" th:unless="${session.containsKey('membre')}"><i
+                                                class="fa fa-sign-in"></i> Se connecter</a></li>
+                                        <li><a href="/panier"><i class="fa fa-shopping-bag"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </header>
+            </div>
+            <div class="big-title-wrapper">
+                <div class="big-title">
+                    <h1 class="sep">Espace voyageur</h1>
+                    <div class="profile-picture">
+                        <figure class="effect">
+                            <img th:src="'http://localhost:8090/images/unsigned_user.jpg'"/>
+                            <figcaption>
+                                <div class="caption-content">
+                                    <a class="file-upload" href="#">
+                                        <i class="fa fa-photo"></i>
+                                        <p>Modifier</p>
+                                    </a>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <form action="/upload_file/user" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+                        <input type="file" name="userimage" class="input-upload hidden"/>
+                        <input type="submit" class="submit-cover hidden"/>
+                    </form>
+                    <p th:text="'Bonjour '+${membre.nom}+' '+${membre.prenom}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="submenu">
+                        <li>
+                            <a href="#mes-reservations" class="button active" id="reservations">Mes réservations</a>
+                        </li>
+                        <li>
+                            <a href="#mes-informations" class="button" id="infos">Mes informations</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="reservations-block" id="mes-reservations">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td>Destinations</td>
+                                        <td>Participants</td>
+                                        <td>Prix total</td>
+                                        <td>Mode de paiement</td>
+                                        <td>Statut</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="item,iterStat : ${reservations}">
+                                        <td>
+                                            <h3><a class="no-style" th:href="'http://localhost:8090/trajet/'+${item.itineraire.id}" th:text="${item.itineraire.nom}"></a></h3>
+                                            <p></p>
+                                        </td>
+                                        <td th:text="${item.seat}+' places'"></td>
+                                        <td th:text="${item.price}+' €'"></td>
+                                        <td th:text="${item.modePaiement}"></td>
+                                        <td>Terminée</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="infos-block" id="mes-informations" style="display: table;">
+                        <form action="http://walkabout-voyages.fr/moncompte" method="post" accept-charset="utf-8">
+                            <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                                <h3>Changer vos informations de connexion</h3>
+                                <div class="form-group">
+                                    <input type="email" name="email" id="email" th:value="${membre.email}"/>
+                                    <div class="change-pwd-wrapper">
+                                        <input type="password" name="old_password" id="former-password" placeholder="Entrez votre ancien mot de passe"/>
+                                        <button class="change-pwd-button">
+                                            Modifiez votre mot de passe
+                                        </button>
+                                    </div>
+                                    <input type="password" name="new_password" id="new-password" placeholder="Entrez votre nouveau mot de passe"/>
+                                    <input type="password" name="confirmation_password" id="new-password-confirmation" placeholder="Confirmez votre nouveau mot de passe"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                                <div class="buttons-wrapper">
+                                    <button class="button" type="submit">Sauvegarder</button>
+                                    <button class="button" type="cancel">Annuler</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="footer__copyright">
+                        <hr/>
+                        <li>©&nbsp;Amazon • 2016</li>
+                        <li><a href="" rel="nofollow">Mentions légales</a> • </li>
+                        <li><a href="tel:0320010203" rel="nofollow"><i class="fa fa-phone"></i> 03 20 01 02 03</a> • </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            $('#mes-reservations').show();
+            $('#mes-informations').hide();
+            $('.espace-voyageur .content .submenu .button').on('click', function (e) {
+                var buttonID = $(this).attr('id');
+                e.preventDefault();
+
+                switch (buttonID) {
+
+                    case 'reservations':
+                        $('#reservations').addClass('active');
+                        if ($('#infos').hasClass('active')) {
+                            $('#infos').removeClass('active');
+                        }
+                        $('#mes-reservations').fadeIn(300);
+                        $('#mes-informations').hide();
+                        break;
+                    case 'infos':
+                        $('#infos').addClass('active');
+                        if ($('#reservations').hasClass('active')) {
+                            $('#reservations').removeClass('active');
+                        }
+                        $('#mes-reservations').hide();
+                        $('#mes-informations').fadeIn(300);
+                        break;
+                }
+            });
+        </script>
+    </footer>
+</body>
+</html>

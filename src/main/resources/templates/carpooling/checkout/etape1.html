@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap.min.css}"
+          href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap-theme.css}"
+          href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../../static/css/main.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Carpooling project</title>
+</head>
+<body class="checkout">
+    <div class="main">
+        <div class="main banner" id="main" data-stellar-background-ratio="0.5">
+            <div class="container-fluid noPadding">
+                <header>
+                    <!-- Navbar -->
+                    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+                        <nav class="navbar navbar-inverse navbar-fixed-top">
+                            <div class="container-fluid">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                            data-target="#navbar" aria-expanded="false">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                        <img alt="Carpooling" src="../../../static/images/LogoCarPooling.png"
+                                             th:src="@{/images/LogoCarPooling.png}" class="logo"/>
+                                        <span>Carpooling</span>
+                                </div>
+                                <div class="navbar-collapse collapse" id="navbar">
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li>
+                                            <a href="/home">
+                                                <i class="fa fa-chevron-left"></i>
+                                                <span class="hidden-xs">Annuler la réservation</span>
+                                                <span class="hidden-lg hidden-md hidden-sm">Annuler</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </header>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="container-fluid noPadding">
+            <div class="row noPadding">
+                <!-- Etapes de commande -->
+                <!-- BREADCRUMBS FOR CHECKOUT -->
+                <div class="steps-wrapper">
+                    <ul class="steps">
+                        <li class="active">
+                            <div class="step-block">
+                                <span class="step">Choix de la date</span>
+                                <span class="number">1</span>
+                            </div>
+                        </li>
+                        <li class="disabled">
+                            <div class="step-block">
+                                <span class="step">Connexion</span>
+                                <span class="number">2</span>
+                            </div>
+                        </li>
+                        <li class="disabled">
+                            <div class="step-block">
+                                <span class="step">Informations</span>
+                                <span class="number">3</span>
+                            </div>
+                        </li>
+                        <li class="disabled">
+                            <div class="step-block">
+                                <span class="step">Paiement</span>
+                                <span class="number">4</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <form action="/checkout/identification" method="post" accept-charset="utf-8">
+                        <div class="choice-block">
+                            <div class="help-block">
+                                <p>Cliquez sur une des bulles pour sélectionner le séjour qui vous intéresse puis cliquez sur "Je réserve" en fin de page.</p>
+                            </div>
+                            <ul class="date-list">
+                                <!--<p class="no-entry"><i class="fa fa-exclamation-circle"></i>Pas de date de prévue pour le moment&nbsp;.</p>-->
+                                <li>
+                                    <div class="form-group">
+                                        <input class="radio" type="radio" name="date" value="13" id="date0" checked=""/>
+                                        <label for="date0"><span></span>Destination&nbsp;:&nbsp;<i th:text="${trajet.nom}"></i></label>
+                                        <p>
+                                            <strong>Départ</strong>
+                                            <span th:text="' : '+${trajet.departure}"></span>
+                                            <span class="hidden-xs">&nbsp;•&nbsp;</span>
+                                            <strong>Retour</strong><span th:text="' : '+${trajet.arrival}"></span>
+                                        </p>
+                                        <p>
+                                            <strong>Prix</strong>
+                                            <span th:text="' : '+${trajet.price}+' € par personne'"></span>
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="buttons-block">
+                            <input class="button" type="submit" value="Je réserve ma place !"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="footer__copyright">
+                        <hr/>
+                        <li>©&nbsp;Amazon • 2016</li>
+                        <li><a href="" rel="nofollow">Mentions légales</a> • </li>
+                        <li><a href="tel:0320010203" rel="nofollow"><i class="fa fa-phone"></i> 03 20 01 02 03</a> • </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    </footer>
+</body>
+</html>
