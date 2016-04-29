@@ -39,6 +39,7 @@ public class MembreServiceImpl implements MembreService {
     public void saveMember(Membre membre) {
         membre.setToken(this.getTokenByUser());
         membre.setActif(false);
+        membre.setPassword(sha256(membre.getPassword()));
         membreMapper.saveMember(membre);
     }
 
